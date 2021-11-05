@@ -1,0 +1,123 @@
+<div class="main-component-container my-5">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card border-0 mb-3">
+        <div class="card-header custom-card-header border-0">
+          <i class="fa fa-credit-card mr-2"></i>
+          <span class="font-weight-bold">Make</span> Transfer
+        </div>
+        <div class="card-body">
+          <form [formGroup]="makeTransferForm" novalidate autocomplete="off">
+            <div class="form-group">
+              <label for="fromAccount" class="font-weight-bold"
+                >From Account</label
+              >
+              <input
+                id="fromAccount"
+                class="form-control"
+                type="text"
+                prefix="My Personal Account: € "
+                mask="separator.2"
+                thousandSeparator=""
+                decimalMarker="."
+                formControlName="fromAccount"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="toAccount" class="font-weight-bold">To Account</label>
+              <input
+                id="toAccount"
+                class="form-control"
+                [class.invalid]="isControlInvalid('toAccount')"
+                type="text"
+                placeholder="type an account name"
+                formControlName="toAccount"
+              />
+              <div *ngIf="isControlErrorVisible('toAccount')">
+                <small
+                  class="text-danger"
+                  *ngIf="makeTransferForm.get('toAccount').hasError('required')"
+                >
+                  This field is required
+                </small>
+              </div>
+            </div>
+
+            <label for="amount" class="font-weight-bold">Amount</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">€</span>
+              </div>
+              <input
+                id="amount"
+                class="form-control"
+                [class.invalid]="isControlInvalid('amount')"
+                type="text"
+                placeholder="specify the amount"
+                mask="separator.2"
+                thousandSeparator=""
+                decimalMarker="."
+                formControlName="amount"
+              />
+            </div>
+            <div *ngIf="isControlErrorVisible('amount')">
+              <small
+                class="text-danger"
+                *ngIf="makeTransferForm.get('amount').hasError('required')"
+              >
+                This field is required
+              </small>
+              <small
+                class="text-danger"
+                *ngIf="makeTransferForm.get('amount').hasError('balanceError')"
+              >
+                There is not enough balance
+              </small>
+            </div>
+
+            <div class="d-flex justify-content-end mt-3">
+              <app-submit-button (submitForm)="submitMakeTransferForm()"></app-submit-button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card border-0">
+        <div class="card-header custom-card-header border-0">
+          <i class="fa fa-list mr-2"></i>
+          Transactions
+          <span class="font-weight-bold">List</span>
+        </div>
+        <div class="card-body">
+          <app-filter (inputChange)="filterTransactionsList($event)"></app-filter>
+          <div class="transactions-list-container scroll">
+            <app-transaction-item class="transaction-list-item" *ngFor="let transaction of filteredTransactionsList | sortByDate:'asc':'dates.valueDate'">
+              <div data-test-hook="transactionColour">
+                <div class="transaction-type-bar" [style.background-color]="transaction.categoryCode"></div>
+              </div>
+              <div data-test-hook="transactionDate">
+                <div>{{transaction.dates.valueDate | dateFormatter:'MMM. D'}}</div>
+              </div>
+              <div data-test-hook="transactionMerchantName">
+                <div class="font-weight-bold">{{transaction.merchant.name}}</div>
+              </div>
+              <div data-test-hook="transactionType">
+                <div>{{transaction.transaction.type}}</div>
+              </div>
+              <div data-test-hook="transactionAmount">
+                <div
+                  class="d-flex justify-content-end font-weight-bold"
+                  [ngClass]="colorAmountValue(transaction.transaction.amountCurrency.amount)"
+                >
+                  € {{transaction.transaction.amountCurrency.amount}}
+                </div>
+              </div>
+            </app-transaction-item>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

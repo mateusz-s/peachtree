@@ -1,0 +1,25 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">
+    Review <span class="font-weight-normal">Transfer</span>
+  </h4>
+  <button type="button" class="close" (click)="dismissModal()">
+    <span>&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <p class="font-italic">Are you ready to send out this transfer?</p>
+  <div>
+    <p class="font-weight-bold">It will be send to account:</p>
+    <p>{{ transferData.toAccount }}</p>
+  </div>
+  <div>
+    <p class="font-weight-bold">With the amount of:</p>
+    <p>€ {{ transferData.amount }}</p>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="dismissModal()">
+    {{ btnCancelText }}
+  </button>
+  <button type="button" class="btn btn-primary" (click)="sendTransfer()">{{ btnContinueText }}</button>
+</div>

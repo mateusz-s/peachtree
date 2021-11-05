@@ -1,0 +1,28 @@
+.app {
+  &-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    padding: 70px 20px 50px;
+    background-image: url("../assets/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  &-logo,
+  &-footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+  &-logo {
+    height: 60px;
+    top: 0;
+  }
+  &-footer {
+    height: 40px;
+    bottom: 0;
+    & ::ng-deep footer {
+      width: auto;
+    }
+  }
+}

@@ -1,0 +1,53 @@
+@import "./vars";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.custom-card-header {
+  color: $white;
+  background-color: $primary-blue;
+}
+
+.form-control {
+  &.invalid {
+    border-color: $red;
+  }
+  &::placeholder {
+    font-style: italic;
+  }
+}
+
+.btn-primary {
+  background-color: $orange;
+  border-color: $orange;
+  &:hover,
+  &:focus,
+  &:not(:disabled):not(.disabled):active {
+    background-color: rgba($orange, 0.8);
+    border-color: rgba($orange, 0.8);
+  }
+}
+
+.scroll {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    display: none;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background: transparent;
+  }
+  &:hover::-webkit-scrollbar-thumb {
+    background: $gray;
+  }
+}
+
